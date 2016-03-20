@@ -26,7 +26,7 @@ use Slim\Http\Request;
 use Slim\Http\Response;
 use Slim\Views\Twig;
 
-// it cannot be extended (such as visibility increase, behavior change, etc)
+// Final class cannot be extended (such as visibility increase, behavior change, etc)
 
 final class Dashboard extends Base
 {

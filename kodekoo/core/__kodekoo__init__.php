@@ -259,12 +259,36 @@ endif;
 
 /*
 |--------------------------------------------------------------------------
-| KODEKOO ACTION DIC
+| KODEKOO FRONTEND ACTION DIC
 |--------------------------------------------------------------------------
 |
-| Descriptions
+| Fronted Action
 |
 */
+
+/*
+|--------------------------------------------------------------------------
+| KODEKOO BACKEND ACTION DIC
+|--------------------------------------------------------------------------
+|
+| Backend Action
+|
+*/
+$container['Auth'] = function ( $container ) use ( $app ) {
+
+    return new \action\backend\Auth
+    (
+        $app,
+        $container->get( 'logger' ),
+        $container->get( 'view' ),
+        $container->get( 'timezone' ),
+        $container->get( 'csrf' ),
+        $container->get( 'sentinel' ),
+        $container->get( 'globalhelper' )
+    );
+
+};
+
 $container['Dashboard'] = function ( $container ) use ( $app ) {
 
     return new \action\backend\Dashboard

@@ -28,13 +28,10 @@
 | Descriptions
 |
 */
-use helpers\KodekooSession;
 
 $app->group( '', function() use ( $app ) {
 
     $app->get('/', function ( $request, $response, $args ) {
-
-    //    $this->logger->info("Kodekoo Labs <kodekoolabs@gmail.com>");
 
         $context['name'] = 'World !';
 
@@ -56,11 +53,9 @@ $app->group( '', function() use ( $app ) {
 */
 $app->group( '/manage', function() use ( $app ) {
 
-    $app->get('/login', function ( $request, $response, $args ) {
+    $app->get('/login', 'Auth:login')->setName('login.backend');
 
-        return $this->view->render($response, 'backend/content/login.twig');
-
-    })->setName('login.backend');
+    $app->get('/register', 'Auth:register')->setName('register.backend');
 
     $app->get('', 'Dashboard:index')->setName('dashboard.backend');
 

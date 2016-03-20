@@ -21,7 +21,7 @@
 
 use helpers\KodekooSession;
 
-abstract class Base //it cannot be instantiated
+abstract class Base // Abstract class cannot be instantiated
 {
 
     public function __construct()
