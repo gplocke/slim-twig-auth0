@@ -1,0 +1,25 @@
+{
+  "name": "fundco",
+  "description": "Idea Fundraising Collaboration",
+  "main": "",
+  "moduleType": [],
+  "keywords": [
+    "kodekoo",
+    "fundraising",
+    "collaboration"
+  ],
+  "authors": [
+    "Rizki Wisnuaji",
+    "S.KG.",
+    "M.Kom."
+  ],
+  "license": "MIT",
+  "homepage": "http://kodekoo.com",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

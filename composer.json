@@ -1,0 +1,63 @@
+{
+    "name": "kodekoo/bootstrap",
+    "type": "project",
+    "description": "A Bootstrap Project for Kodekoo Development Purpose based on Slim Framework 3+",
+    "keywords": ["microframework","rest","router", "kodekoo", "bootstrap", "mix", "php"],
+    "homepage": "http://kodekoo.com",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Josh Lockhart",
+            "email": "info@joshlockhart.com",
+            "homepage": "http://www.joshlockhart.com/"
+        },
+        {
+            "name": "Rizki Wisnuaji",
+            "email": "dev@kodekoo.com",
+            "homepage": "http://www.kodekoo.com/"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.0",
+        "slim/slim": "*",
+        "slim/csrf": "*",
+        "monolog/monolog": "*",
+        "illuminate/database" : "*",
+        "illuminate/events" : "*",
+        "ircmaxell/password-compat" : "*",
+        "symfony/http-foundation" : "*",
+        "phpmailer/phpmailer": "*",
+        "nesbot/carbon": "*",
+        "codeguy/upload": "*",
+        "zeuxisoo/slim-whoops": "*",
+        "slim/twig-view": "*",
+        "slim/flash": "*",
+        "cartalyst/sentinel": "*",
+        "filp/whoops": "*",
+        "akrabat/rka-ip-address-middleware": "^0.4.0"
+    },
+    "suggest": {
+        "ext-mcrypt": "Required for HTTP cookie encryption"
+    },
+    "autoload": {
+        "psr-0":
+        {
+        },
+        "psr-4":
+        {
+            "": "kodekoo/",
+            "Slim\\Views\\": "./"
+        }
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "sudo chmod -R 777 tmp/*"
+        ],
+        "post-update-cmd": [
+            "sudo rm -rf tmp/cache/templates/*",
+            "sudo rm -rf tmp/logs/*"
+        ],
+        "post-create-project-cmd": [
+        ]
+    }
+}
