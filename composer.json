@@ -1,5 +1,5 @@
 {
-    "name": "kodekoo/bootstrap",
+    "name": "kodekoo/slim-twig-auth0",
     "type": "project",
     "description": "A Bootstrap Project for Kodekoo Development Purpose based on Slim Framework 3+",
     "keywords": ["microframework","rest","router", "kodekoo", "bootstrap", "mix", "php"],
@@ -13,8 +13,8 @@
         },
         {
             "name": "Rizki Wisnuaji",
-            "email": "dev@kodekoo.com",
-            "homepage": "http://www.kodekoo.com/"
+            "email": "kodekoolabs@gmail.com",
+            "homepage": "https://comestoarra.com/"
         }
     ],
     "require": {
