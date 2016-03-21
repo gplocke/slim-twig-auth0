@@ -58,6 +58,7 @@
             "sudo rm -rf tmp/logs/*"
         ],
         "post-create-project-cmd": [
+            "sudo mkdir tmp/cache/templates"
         ]
     }
 }
