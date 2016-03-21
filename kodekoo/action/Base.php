@@ -1,23 +1,20 @@
 <?php namespace action;
 
-/**
- * This file may not be redistributed in whole or significant part.
- * ---------------- THIS IS NOT FREE SOFTWARE ----------------
- *
- *
- * @file       	Base.php
- * @package    	Bootstrap Web Application Products
- * @company     Kodekoo <kodekoolabs@gmail.com>
- * @programmer	Rizki Wisnuaji, drg., M.Kom. <rizkiwisnuaji@comestoarra.com>
- * @copyright  	2016 Kodekoo. All Rights Reserved.
- * @license    	http://kodekoo.com/license
- * @version    	Release: @1.0@
- * @framework  	http://slimframework.com
- *
- *
- * ---------------- THIS IS NOT FREE SOFTWARE ----------------
- * This file may not be redistributed in whole or significant part.
- **/
+/*
+| ============================================================================================================ |
+|   kkk      kkk      ooooo       dddddddd         eeeeeeeeee   kkk      kkk      ooooo            ooooo       |
+|   kkk     kkk     ooooooooo     ddddddddddd      eeeeeeeeee   kkk     kkk     ooooooooo        ooooooooo     | 
+|   kkk    kkk     ooo     ooo    ddd      ddd     eee          kkk    kkk     ooo     ooo      ooo     ooo    |
+|   kkk   kkk     oooo     oooo   ddd       ddd    eee          kkk   kkk     oooo     oooo    oooo     oooo   |
+|   kkk  kkk      oooo     oooo   ddd        ddd   eee          kkk  kkk      oooo     oooo    oooo     oooo   |
+|   kkkkkkkk      oooo     oooo   ddd        ddd   eeeeeeeeee   kkkkkkkk      oooo     oooo    oooo     oooo   |
+|   kkk  kkk      oooo     oooo   ddd        ddd   eee          kkk  kkk      oooo     oooo    oooo     oooo   |
+|   kkk   kkk     oooo     oooo   ddd       ddd    eee          kkk   kkk     oooo     oooo    oooo     oooo   |
+|   kkk    kkk     ooo     ooo    ddd      ddd     eee          kkk    kkk     ooo     ooo      ooo     ooo    |
+|   kkk     kkk     ooooooooo     dddddddddd       eeeeeeeeee   kkk     kkk     ooooooooo        ooooooooo     |
+|   kkk      kkk      ooooo       ddddddd          eeeeeeeeee   kkk      kkk      ooooo            ooooo       |
+| ============================================================================================================ |
+*/
 
 use helpers\KodekooSession;
 
@@ -30,6 +27,10 @@ abstract class Base // Abstract class cannot be instantiated
         $this->checkAuth = KodekooSession::userIsLoggedIn();
 
         $this->kodekoo = [];
+
+        $this->kodekoo[ 'frontend.theme.path' ] = 'frontend/content/';
+
+        $this->kodekoo[ 'backend.theme.path' ]  = 'backend/content/';
 
         $this->context = [];
 

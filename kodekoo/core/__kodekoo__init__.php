@@ -1,23 +1,20 @@
 <?php namespace kodekoo\core;
 
-/**
- * This file may not be redistributed in whole or significant part.
- * ---------------- THIS IS NOT FREE SOFTWARE ----------------
- *
- *
- * @file       	__kodekoo__init__.php
- * @package    	Bootstrap Web Application Products
- * @company     Kodekoo <kodekoolabs@gmail.com>
- * @programmer	Rizki Wisnuaji, drg., M.Kom. <rizkiwisnuaji@comestoarra.com>
- * @copyright  	2016 Kodekoo. All Rights Reserved.
- * @license    	http://kodekoo.com/license
- * @version    	Release: @1.0@
- * @framework  	http://slimframework.com
- *
- *
- * ---------------- THIS IS NOT FREE SOFTWARE ----------------
- * This file may not be redistributed in whole or significant part.
- **/
+/*
+| ============================================================================================================ |
+|   kkk      kkk      ooooo       dddddddd         eeeeeeeeee   kkk      kkk      ooooo            ooooo       |
+|   kkk     kkk     ooooooooo     ddddddddddd      eeeeeeeeee   kkk     kkk     ooooooooo        ooooooooo     | 
+|   kkk    kkk     ooo     ooo    ddd      ddd     eee          kkk    kkk     ooo     ooo      ooo     ooo    |
+|   kkk   kkk     oooo     oooo   ddd       ddd    eee          kkk   kkk     oooo     oooo    oooo     oooo   |
+|   kkk  kkk      oooo     oooo   ddd        ddd   eee          kkk  kkk      oooo     oooo    oooo     oooo   |
+|   kkkkkkkk      oooo     oooo   ddd        ddd   eeeeeeeeee   kkkkkkkk      oooo     oooo    oooo     oooo   |
+|   kkk  kkk      oooo     oooo   ddd        ddd   eee          kkk  kkk      oooo     oooo    oooo     oooo   |
+|   kkk   kkk     oooo     oooo   ddd       ddd    eee          kkk   kkk     oooo     oooo    oooo     oooo   |
+|   kkk    kkk     ooo     ooo    ddd      ddd     eee          kkk    kkk     ooo     ooo      ooo     ooo    |
+|   kkk     kkk     ooooooooo     dddddddddd       eeeeeeeeee   kkk     kkk     ooooooooo        ooooooooo     |
+|   kkk      kkk      ooooo       ddddddd          eeeeeeeeee   kkk      kkk      ooooo            ooooo       |
+| ============================================================================================================ |
+*/
 
 use Carbon\Carbon as KodekooCarbon;
 use helpers\KodekooSession;
@@ -198,20 +195,6 @@ $container['globalhelper'] = function ( $container ) {
 
 /*
 |--------------------------------------------------------------------------
-| SENTINEL
-|--------------------------------------------------------------------------
-|
-| https://cartalyst.com/manual/sentinel/2.0#native
-|
-*/
-$container['sentinel'] = function ( $container) {
-
-    return ( new \Cartalyst\Sentinel\Native\Facades\Sentinel() )->getSentinel();
-
-};
-
-/*
-|--------------------------------------------------------------------------
 | Carbon
 |--------------------------------------------------------------------------
 |
@@ -222,6 +205,25 @@ $container['sentinel'] = function ( $container) {
 $container['timezone'] = function ( $container ) {
 
     return new KodekooCarbon( TIMEZONE );
+
+};
+
+/*
+|--------------------------------------------------------------------------
+| AUTH0
+|--------------------------------------------------------------------------
+|
+| @documentation    https://auth0.com/docs/quickstart/webapp/php/
+|
+*/
+$container['auth0'] = function ( $container ) {
+
+    return new \Auth0\SDK\Auth0([
+        'domain'        => KODEKOO_AUTH0_DOMAIN,
+        'client_id'     => KODEKOO_AUTH0_CLIENT_ID,
+        'client_secret' => KODEKOO_AUTH0_CLIENT_SECRET,
+        'redirect_uri'  => KODEKOO_AUTH0_REDIRECT_URI
+    ]);
 
 };
 
@@ -279,11 +281,11 @@ $container['Auth'] = function ( $container ) use ( $app ) {
     return new \action\backend\Auth
     (
         $app,
+        $container->get( 'auth0' ),
         $container->get( 'logger' ),
         $container->get( 'view' ),
         $container->get( 'timezone' ),
         $container->get( 'csrf' ),
-        $container->get( 'sentinel' ),
         $container->get( 'globalhelper' )
     );
 
@@ -294,11 +296,11 @@ $container['Dashboard'] = function ( $container ) use ( $app ) {
     return new \action\backend\Dashboard
     (
         $app,
+        $container->get( 'auth0' ),
         $container->get( 'logger' ),
         $container->get( 'view' ),
         $container->get( 'timezone' ),
         $container->get( 'csrf' ),
-        $container->get( 'sentinel' ),
         $container->get( 'globalhelper' )
     );
 

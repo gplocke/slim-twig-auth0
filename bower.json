@@ -1,6 +1,6 @@
 {
-  "name": "fundco",
-  "description": "Idea Fundraising Collaboration",
+  "name": "slim-twig-auth0",
+  "description": "Slim 3 with Twig templating engine and Auth0",
   "main": "",
   "moduleType": [],
   "keywords": [

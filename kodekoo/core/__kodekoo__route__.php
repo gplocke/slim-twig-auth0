@@ -1,23 +1,20 @@
 <?php
 
-/**
- * This file may not be redistributed in whole or significant part.
- * ---------------- THIS IS NOT FREE SOFTWARE ----------------
- *
- *
- * @file       	__kodekoo__route__.php
- * @package    	Bootstrap Web Application Products
- * @company     Kodekoo <kodekoolabs@gmail.com>
- * @programmer	Rizki Wisnuaji, drg., M.Kom. <rizkiwisnuaji@comestoarra.com>
- * @copyright  	2016 Kodekoo. All Rights Reserved.
- * @license    	http://kodekoo.com/license
- * @version    	Release: @1.0@
- * @framework  	http://slimframework.com
- *
- *
- * ---------------- THIS IS NOT FREE SOFTWARE ----------------
- * This file may not be redistributed in whole or significant part.
- **/
+/*
+| ============================================================================================================ |
+|   kkk      kkk      ooooo       dddddddd         eeeeeeeeee   kkk      kkk      ooooo            ooooo       |
+|   kkk     kkk     ooooooooo     ddddddddddd      eeeeeeeeee   kkk     kkk     ooooooooo        ooooooooo     | 
+|   kkk    kkk     ooo     ooo    ddd      ddd     eee          kkk    kkk     ooo     ooo      ooo     ooo    |
+|   kkk   kkk     oooo     oooo   ddd       ddd    eee          kkk   kkk     oooo     oooo    oooo     oooo   |
+|   kkk  kkk      oooo     oooo   ddd        ddd   eee          kkk  kkk      oooo     oooo    oooo     oooo   |
+|   kkkkkkkk      oooo     oooo   ddd        ddd   eeeeeeeeee   kkkkkkkk      oooo     oooo    oooo     oooo   |
+|   kkk  kkk      oooo     oooo   ddd        ddd   eee          kkk  kkk      oooo     oooo    oooo     oooo   |
+|   kkk   kkk     oooo     oooo   ddd       ddd    eee          kkk   kkk     oooo     oooo    oooo     oooo   |
+|   kkk    kkk     ooo     ooo    ddd      ddd     eee          kkk    kkk     ooo     ooo      ooo     ooo    |
+|   kkk     kkk     ooooooooo     dddddddddd       eeeeeeeeee   kkk     kkk     ooooooooo        ooooooooo     |
+|   kkk      kkk      ooooo       ddddddd          eeeeeeeeee   kkk      kkk      ooooo            ooooo       |
+| ============================================================================================================ |
+*/
 
 
 /*
@@ -37,9 +34,25 @@ $app->group( '', function() use ( $app ) {
 
         $context['time'] = $this->timezone;
 
-        return $this->view->render($response, 'frontend/content/homepage.twig', $context);
+        return $this->view->render( $response, 'frontend/content/homepage.twig', $context );
 
     })->setName('homepage');
+
+    $app->get('/callback', function ( $request, $response, $args ) {
+
+    	$router = $this->router;
+        
+        if ( ! $this->auth0->getUser() ) :
+
+            return $response->withRedirect( $router->pathFor( 'login.backend' ) ); 
+
+        else :
+
+        	return $response->withRedirect( $router->pathFor( 'dashboard.backend' ) ); 
+
+        endif;
+
+    })->setName('auth0-callback');
 
 });
 
@@ -58,6 +71,24 @@ $app->group( '/manage', function() use ( $app ) {
     $app->get('/register', 'Auth:register')->setName('register.backend');
 
     $app->get('', 'Dashboard:index')->setName('dashboard.backend');
+
+    $app->get('/logout', function ( $request, $response, $args ) {
+
+    	$router = $this->router;
+
+    	$this->auth0->logout();
+        
+        if ( ! $this->auth0->getUser() ) :
+
+            return $response->withRedirect( $router->pathFor( 'login.backend' ) ); 
+
+        else :
+
+        	return $response->withRedirect( $router->pathFor( 'dashboard.backend' ) ); 
+
+        endif;
+
+    })->setName('logout.backend');
 
 });
 

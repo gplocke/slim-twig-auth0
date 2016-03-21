@@ -32,9 +32,9 @@
         "zeuxisoo/slim-whoops": "*",
         "slim/twig-view": "*",
         "slim/flash": "*",
-        "cartalyst/sentinel": "*",
         "filp/whoops": "*",
-        "akrabat/rka-ip-address-middleware": "^0.4.0"
+        "akrabat/rka-ip-address-middleware": "^0.4.0",
+        "auth0/auth0-php": "~3.0"
     },
     "suggest": {
         "ext-mcrypt": "Required for HTTP cookie encryption"

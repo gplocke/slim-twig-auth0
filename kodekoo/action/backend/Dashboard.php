@@ -1,26 +1,22 @@
 <?php namespace action\backend;
 
-/**
- * This file may not be redistributed in whole or significant part.
- * ---------------- THIS IS NOT FREE SOFTWARE ----------------
- *
- *
- * @file       	Dashboard.php
- * @package    	Bootstrap Web Application Products
- * @company     Kodekoo <kodekoolabs@gmail.com>
- * @programmer	Rizki Wisnuaji, drg., M.Kom. <rizkiwisnuaji@comestoarra.com>
- * @copyright  	2016 Kodekoo. All Rights Reserved.
- * @license    	http://kodekoo.com/license
- * @version    	Release: @1.0@
- * @framework  	http://slimframework.com
- *
- *
- * ---------------- THIS IS NOT FREE SOFTWARE ----------------
- * This file may not be redistributed in whole or significant part.
- **/
+/*
+| ============================================================================================================ |
+|   kkk      kkk      ooooo       dddddddd         eeeeeeeeee   kkk      kkk      ooooo            ooooo       |
+|   kkk     kkk     ooooooooo     ddddddddddd      eeeeeeeeee   kkk     kkk     ooooooooo        ooooooooo     | 
+|   kkk    kkk     ooo     ooo    ddd      ddd     eee          kkk    kkk     ooo     ooo      ooo     ooo    |
+|   kkk   kkk     oooo     oooo   ddd       ddd    eee          kkk   kkk     oooo     oooo    oooo     oooo   |
+|   kkk  kkk      oooo     oooo   ddd        ddd   eee          kkk  kkk      oooo     oooo    oooo     oooo   |
+|   kkkkkkkk      oooo     oooo   ddd        ddd   eeeeeeeeee   kkkkkkkk      oooo     oooo    oooo     oooo   |
+|   kkk  kkk      oooo     oooo   ddd        ddd   eee          kkk  kkk      oooo     oooo    oooo     oooo   |
+|   kkk   kkk     oooo     oooo   ddd       ddd    eee          kkk   kkk     oooo     oooo    oooo     oooo   |
+|   kkk    kkk     ooo     ooo    ddd      ddd     eee          kkk    kkk     ooo     ooo      ooo     ooo    |
+|   kkk     kkk     ooooooooo     dddddddddd       eeeeeeeeee   kkk     kkk     ooooooooo        ooooooooo     |
+|   kkk      kkk      ooooo       ddddddd          eeeeeeeeee   kkk      kkk      ooooo            ooooo       |
+| ============================================================================================================ |
+*/
 
 use action\Base;
-use database\backend\User;
 use Psr\Log\LoggerInterface;
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -32,24 +28,24 @@ final class Dashboard extends Base
 {
 
     private $app;
+    private $auth0;
     private $logger;
     private $view;
     private $timezone;
     private $csrf;
-    private $sentinel;
     private $globalhelper;
 
-    public function __construct( $app, LoggerInterface $logger, Twig $view, $timezone, $csrf, $sentinel, $globalhelper )
+    public function __construct( $app, $auth0, LoggerInterface $logger, Twig $view, $timezone, $csrf, $globalhelper )
     {
 
         parent::__construct();
 
         $this->app          = $app;
+        $this->auth0        = $auth0;
         $this->logger       = $logger;
         $this->view         = $view;
         $this->timezone     = $timezone;
         $this->csrf         = $csrf;
-        $this->sentinel     = $sentinel;
         $this->globalhelper = $globalhelper;
 
     }
@@ -57,7 +53,7 @@ final class Dashboard extends Base
     public function index( Request $request, Response $response, $args )
     {
 
-        if ( ! $this->checkAuth ) :
+        if ( ! $this->auth0->getUser() ) :
 
             return $response->withRedirect( $this->app->getContainer()->get( 'router' )->pathFor( 'login.backend' ) );
             // return $response->withStatus(400)->write('Bad Request');
@@ -68,11 +64,7 @@ final class Dashboard extends Base
 
         $this->context = [
 
-            'user'          =>  User::countUser(),
-
-            'name'          => 'Backend !',
-
-            'random'        => $this->globalhelper->generatePassword(),
+            'user'          =>  $this->auth0->getUser(),
 
             'time'          => TIMEZONE . ' : ' . $this->timezone,
 
@@ -82,30 +74,12 @@ final class Dashboard extends Base
 
             'csrf_value'    => $request->getAttribute( $this->csrf->getTokenValueKey() ),
 
+            'logout_link'   => $this->app->getContainer()->get( 'router' )->pathFor( 'logout.backend' ),
+
         ];
 
 
-//        $check = $this->sentinel->findByCredentials([
-//            'login'    => 'john.doe@example.com'
-//        ]);
-//
-//        if ( $check ) :
-//
-//            $this->context['message'] = 'User already exists !';
-//
-//        else :
-//
-//            $this->sentinel->register([
-//                'email'    => 'john.doe@example.com',
-//                'password' => 'password',
-//            ]);
-//
-//            $this->context['message'] = 'User was created !';
-//
-//        endif;
-
-
-        $this->view->render( $response, 'backend/content/dashboard.twig', $this->context );
+        $this->view->render ( $response, $this->kodekoo[ 'backend.theme.path' ] . 'dashboard.twig', $this->context );
 
         return $response;
     }

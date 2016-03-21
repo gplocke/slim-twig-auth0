@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {% block head %}
+    <!-- Standard Meta -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <!-- Site Properties -->
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{{ SEMANTIC_COMPONENT }}dist/semantic.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ SEMANTIC_COMPONENT }}dist/components/reset.css">
+    <link rel="stylesheet" type="text/css" href="{{ SEMANTIC_COMPONENT }}dist/components/site.css">
+    <link rel="stylesheet" type="text/css" href="{{ SEMANTIC_COMPONENT }}dist/components/container.css">
+    <link rel="stylesheet" type="text/css" href="{{ SEMANTIC_COMPONENT }}dist/components/grid.css">
+    <link rel="stylesheet" type="text/css" href="{{ SEMANTIC_COMPONENT }}dist/components/header.css">
+    <link rel="stylesheet" type="text/css" href="{{ SEMANTIC_COMPONENT }}dist/components/image.css">
+    <link rel="stylesheet" type="text/css" href="{{ SEMANTIC_COMPONENT }}dist/components/menu.css">
+    <link rel="stylesheet" type="text/css" href="{{ SEMANTIC_COMPONENT }}dist/components/divider.css">
+    <link rel="stylesheet" type="text/css" href="{{ SEMANTIC_COMPONENT }}dist/components/segment.css">
+    <link rel="stylesheet" type="text/css" href="{{ SEMANTIC_COMPONENT }}dist/components/form.css">
+    <link rel="stylesheet" type="text/css" href="{{ SEMANTIC_COMPONENT }}dist/components/input.css">
+    <link rel="stylesheet" type="text/css" href="{{ SEMANTIC_COMPONENT }}dist/components/button.css">
+    <link rel="stylesheet" type="text/css" href="{{ SEMANTIC_COMPONENT }}dist/components/list.css">
+    <link rel="stylesheet" type="text/css" href="{{ SEMANTIC_COMPONENT }}dist/components/message.css">
+    <link rel="stylesheet" type="text/css" href="{{ SEMANTIC_COMPONENT }}dist/components/icon.css">
+    <link rel="stylesheet" type="text/css" href="{{ GLOBAL_ASSETS_CSS }}auth.css">
+    <script src="{{ GLOBAL_COMPONENTS }}jquery/dist/jquery.min.js"></script>
+    <script src="{{ SEMANTIC_COMPONENT }}dist/semantic.min.js"></script>
+    <script src="{{ SEMANTIC_COMPONENT }}dist/components/form.js"></script>
+    <script src="{{ SEMANTIC_COMPONENT }}dist/components/transition.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#login').form({
+                fields: {
+                    email: {
+                        identifier: 'email',
+                        rules: [{
+                            type: 'empty',
+                            prompt: 'Please enter your e-mail'
+                        }, {
+                            type: 'email',
+                            prompt: 'Please enter a valid e-mail'
+                        }]
+                    },
+                    password: {
+                        identifier: 'password',
+                        rules: [{
+                            type: 'empty',
+                            prompt: 'Please enter your password'
+                        }, {
+                            type: 'length[6]',
+                            prompt: 'Your password must be at least 6 characters'
+                        }]
+                    }
+                }
+            });
+        });
+    </script>
+    {% endblock %}
+</head>
+
+<body>
+{% block content %}{% endblock %}
+
+
+{% block footer %}{% endblock %}
+
+</body>
+
+</html>

@@ -1,23 +1,20 @@
 <?php namespace action\backend;
 
-/**
- * This file may not be redistributed in whole or significant part.
- * ---------------- THIS IS NOT FREE SOFTWARE ----------------
- *
- *
- * @file       	Auth.php
- * @package    	Bootstrap Web Application Products
- * @company     Kodekoo <kodekoolabs@gmail.com>
- * @programmer	Rizki Wisnuaji, drg., M.Kom. <rizkiwisnuaji@comestoarra.com>
- * @copyright  	2016 Kodekoo. All Rights Reserved.
- * @license    	http://kodekoo.com/license
- * @version    	Release: @1.0@
- * @framework  	http://slimframework.com
- *
- *
- * ---------------- THIS IS NOT FREE SOFTWARE ----------------
- * This file may not be redistributed in whole or significant part.
- **/
+/*
+| ============================================================================================================ |
+|   kkk      kkk      ooooo       dddddddd         eeeeeeeeee   kkk      kkk      ooooo            ooooo       |
+|   kkk     kkk     ooooooooo     ddddddddddd      eeeeeeeeee   kkk     kkk     ooooooooo        ooooooooo     | 
+|   kkk    kkk     ooo     ooo    ddd      ddd     eee          kkk    kkk     ooo     ooo      ooo     ooo    |
+|   kkk   kkk     oooo     oooo   ddd       ddd    eee          kkk   kkk     oooo     oooo    oooo     oooo   |
+|   kkk  kkk      oooo     oooo   ddd        ddd   eee          kkk  kkk      oooo     oooo    oooo     oooo   |
+|   kkkkkkkk      oooo     oooo   ddd        ddd   eeeeeeeeee   kkkkkkkk      oooo     oooo    oooo     oooo   |
+|   kkk  kkk      oooo     oooo   ddd        ddd   eee          kkk  kkk      oooo     oooo    oooo     oooo   |
+|   kkk   kkk     oooo     oooo   ddd       ddd    eee          kkk   kkk     oooo     oooo    oooo     oooo   |
+|   kkk    kkk     ooo     ooo    ddd      ddd     eee          kkk    kkk     ooo     ooo      ooo     ooo    |
+|   kkk     kkk     ooooooooo     dddddddddd       eeeeeeeeee   kkk     kkk     ooooooooo        ooooooooo     |
+|   kkk      kkk      ooooo       ddddddd          eeeeeeeeee   kkk      kkk      ooooo            ooooo       |
+| ============================================================================================================ |
+*/
 
 use action\Base;
 use Psr\Log\LoggerInterface;
@@ -31,24 +28,24 @@ final class Auth extends Base
 {
 
     private $app;
+    private $auth0;
     private $logger;
     private $view;
     private $timezone;
     private $csrf;
-    private $sentinel;
     private $globalhelper;
 
-    public function __construct( $app, LoggerInterface $logger, Twig $view, $timezone, $csrf, $sentinel, $globalhelper )
+    public function __construct( $app, $auth0, LoggerInterface $logger, Twig $view, $timezone, $csrf, $globalhelper )
     {
 
         parent::__construct();
 
         $this->app          = $app;
+        $this->auth0        = $auth0;
         $this->logger       = $logger;
         $this->view         = $view;
         $this->timezone     = $timezone;
         $this->csrf         = $csrf;
-        $this->sentinel     = $sentinel;
         $this->globalhelper = $globalhelper;
 
     }
@@ -56,7 +53,7 @@ final class Auth extends Base
     public function login( Request $request, Response $response, $args )
     {
 
-        if ( $this->checkAuth ) :
+        if ( $this->auth0->getUser() ) :
 
             return $response->withRedirect( $this->app->getContainer()->get( 'router' )->pathFor( 'dashboard.backend' ) );
 
@@ -64,7 +61,20 @@ final class Auth extends Base
 
         $this->logger->info( "Login page" );
 
-        $this->view->render($response, 'backend/content/auth/login.twig');
+        $this->context = [
+
+            'KODEKOO_AUTH0_DOMAIN'          => KODEKOO_AUTH0_DOMAIN,
+            'KODEKOO_AUTH0_CLIENT_ID'       => KODEKOO_AUTH0_CLIENT_ID,
+            'KODEKOO_AUTH0_CLIENT_SECRET'   => KODEKOO_AUTH0_CLIENT_SECRET,
+            'KODEKOO_AUTH0_REDIRECT_URI'    => KODEKOO_AUTH0_REDIRECT_URI,
+
+            'SEMANTIC_COMPONENT' => SEMANTIC_COMPONENT,
+            'GLOBAL_COMPONENTS'  => GLOBAL_COMPONENTS,
+            'GLOBAL_ASSETS_CSS'  => GLOBAL_ASSETS_CSS
+
+        ];
+
+        $this->view->render ( $response, $this->kodekoo[ 'backend.theme.path' ] . 'auth/login.twig', $this->context );
 
         return $response;
     }
@@ -78,11 +88,25 @@ final class Auth extends Base
 
         endif;
 
-        $this->logger->info( "Register page" );
+        $this->logger->info ( "Register page" );
 
-        $this->view->render($response, 'backend/content/auth/register.twig');
+        $this->view->render ( $response, $this->kodekoo[ 'backend.theme.path' ] . 'auth/register.twig' );
 
         return $response;
+    }
+
+    public function forgot ( Request $request, Response $response, $args )
+    {
+
+        // TODO[rizkiwisnuaji] Implement this
+
+    }
+
+    public function reset( Request $request, Response $response, $args )
+    {
+
+        // TODO[rizkiwisnuaji] Implement this
+
     }
 
 }
