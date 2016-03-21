@@ -26,16 +26,16 @@ define( 'DB_HOST', 'localhost' );
 define( 'DB_PREFIX',  'kdk_' );
 
 // DATABASE NAME
-define( 'DB_NAME', 'cbndash' );
+define( 'DB_NAME', '' );
 
 // DATABASE USER
-define( 'DB_USER', 'homestead' );
+define( 'DB_USER', '' );
 
 // DATABASE PASSWORD
-define( 'DB_PASS', 'secret' );
+define( 'DB_PASS', '' );
 
 // DATABASE PORT
-define( 'DB_PORT', '3306' );
+define( 'DB_PORT', '' );
 
 // DATABASE CHARSET
 define( 'DB_CHARSET', 'utf8' );
