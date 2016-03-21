@@ -1,7 +1,9 @@
 # slim-twig-auth0
 ## Basic Auth0 with Slim 3 PHP Framework
 
-### Slim 3 skeleton project with Auth0 - [https://auth0.com/] ( slim3, slim-3-controller-route, twig, eloquent )
+### Slim 3 skeleton project with Auth0 - [https://auth0.com/]
+
+include : slim 3, slim-3-controller-route, twig, eloquent
 
 # Installation
 1. Sign up and Create new Auth0 apps : https://auth0.com/docs/quickstart/webapp/php
