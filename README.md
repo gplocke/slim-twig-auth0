@@ -3,7 +3,7 @@
 
 ### Slim 3 skeleton project with Auth0 - [https://auth0.com/]
 
-include : slim 3, slim-3-controller-route, twig, eloquent
+include : slim 3, slim-3-controller-route, twig, eloquent, semantic UI
 
 # Installation
 1. Sign up and Create new Auth0 apps : https://auth0.com/docs/quickstart/webapp/php
